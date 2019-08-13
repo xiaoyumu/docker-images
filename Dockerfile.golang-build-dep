@@ -1,0 +1,93 @@
+FROM hub.fshome.net/golang/golang-buildbase:debian-buster-1.12.7
+MAINTAINER xiaoyumu@gmail.com
+
+
+# Turn on module mode, refer to 'go help modules' for more details
+ARG GO_PROXY
+ENV GOPROXY ${GO_PROXY:-https://mirrors.aliyun.com/goproxy/}
+
+# Avaliable value is off, on and auto (default is on)
+ARG GO_MODULE
+ENV GO111MODULE ${GO_MODULE:-off}
+
+# Build and testing packages
+RUN go get -u github.com/axw/gocov/gocov && \
+    go get -u github.com/smartystreets/assertions && \
+    go get -u github.com/AlekSi/gocov-xml && \
+    go get -u gopkg.in/matm/v1/gocov-html && \
+    go get -u github.com/smartystreets/goconvey && \
+    go get -u github.com/golang/mock/gomock && \
+    go get -u github.com/stretchr/testify && \
+    go get -u github.com/stretchr/testify/assert
+
+# Couchbase SDKs and clients
+RUN go get -u gopkg.in/couchbase/gocbcore.v7 && \
+    go get -u gopkg.in/couchbase/gocb.v1 && \
+    go get -u github.com/couchbase/gocb && \
+    go get -u github.com/couchbase/go-couchbase
+
+# Consul related SDKs and clients
+RUN go get -u github.com/hashicorp/hcl && \
+    go get -u github.com/hashicorp/hcl/hcl/printer && \
+    go get -u github.com/hashicorp/consul/api 
+    
+# gRPC
+RUN go get -u google.golang.org/grpc && \
+    go get -u github.com/Kelindar/binary && \
+    go get -u github.com/satori/go.uuid && \
+    go get -u github.com/dgrijalva/jwt-go 
+    
+# beego framework
+RUN go get -u github.com/astaxie/beego/cache && \
+    go get -u github.com/astaxie/beego && \
+    go get -u github.com/gabriel-vasile/mimetype && \
+    go get -u github.com/h2non/filetype && \
+    go get -u gopkg.in/h2non/filetype.v1
+
+# Echo framework
+RUN go get -u github.com/labstack/echo && \
+    go get -u github.com/swaggo/echo-swagger && \
+    go get -u github.com/sirupsen/logrus
+
+# SQLServer
+RUN go get -u github.com/xiaoyumu/go-mssqldb 
+
+# MQ RabbitMQ
+RUN go get -u github.com/streadway/amqp
+
+# Kafka clients
+RUN go get -u gopkg.in/confluentinc/confluent-kafka-go.v1/kafka
+
+# ETCD Clients
+RUN go get -u go.etcd.io/etcd/clientv3 
+
+# Elasticsearch Clients
+RUN go get -u gopkg.in/olivere/elastic.v5 && \
+    go get -u gopkg.in/olivere/elastic.v6 
+
+# Image
+RUN go get -u github.com/disintegration/imaging && \
+    go get -u github.com/golang/freetype && \
+    go get -u github.com/golang/freetype/truetype
+
+RUN go get -u github.com/patrickmn/go-cache
+RUN go get -u github.com/jtolds/gls
+RUN go get -u github.com/fsnotify/fsnotify
+RUN go get -u github.com/magiconair/properties 
+RUN go get -u github.com/mitchellh/mapstructure 
+RUN go get -u github.com/pelletier/go-toml 
+
+RUN go get -u github.com/spf13/viper 
+RUN go get -u github.com/spf13/jwalterweatherman 
+RUN go get -u github.com/spf13/afero 
+RUN go get -u github.com/spf13/cast 
+RUN go get -u github.com/spf13/pflag 
+ 
+RUN go get -u github.com/opentracing/opentracing-go 
+RUN go get -u github.com/forestgiant/sliceutil 
+RUN go get -u github.com/minio/minio-go 
+RUN go get -u github.com/nwaples/rardecode
+RUN go get -u github.com/ulikunitz/xz
+RUN go get -u github.com/c9s/goprocinfo/linux
+RUN go get -u github.com/koding/multiconfig
+RUN go get -u gopkg.in/alecthomas/kingpin.v2
